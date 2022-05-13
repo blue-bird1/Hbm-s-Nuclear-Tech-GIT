@@ -261,7 +261,7 @@ public class FFUtils {
 	 * @return true if something was actually filled
 	 */
 	public static boolean fillFromFluidContainer(IItemHandlerModifiable slots, FluidTank tank, int slot1, int slot2){
-		if(slots == null || tank == null || slots.getSlots() < slot1 || slots.getSlots() < slot2 || slots.getStackInSlot(slot1) == null || slots.getStackInSlot(slot1).isEmpty()) {
+		if(slots == null || tank == null || slots.getSlots() < slot1 || slots.getSlots() < slot2 || slots.getStackInSlot(slot1).isEmpty()) {
 			return false;
 		}
 
@@ -270,7 +270,7 @@ public class FFUtils {
 
 		if(slots.getStackInSlot(slot1).getItem() == ModItems.fluid_barrel_infinite && tank.getFluid() != null) {
 
-			return tank.fill(new FluidStack(tank.getFluid(), Integer.MAX_VALUE), true) > 0 ? true : false;
+			return tank.fill(new FluidStack(tank.getFluid(), Integer.MAX_VALUE), true) > 0;
 		}
 		if(FluidUtil.getFluidContained(slots.getStackInSlot(slot1)) == null) {
 

@@ -20,7 +20,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
-public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBMKFluxReceiver, IRBMKLoadable {
+import cpw.mods.fml.common.Optional;
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
+
+@Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
+public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBMKFluxReceiver, IRBMKLoadable, SimpleComponent {
 	
 	//amount of "neutron energy" buffered for the next tick to use for the reaction
 	public double fluxFast;
@@ -66,7 +73,7 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 				
 				rod.updateHeat(world, inventory.getStackInSlot(0), 1.0D);
 				this.heat += rod.provideHeat(world, inventory.getStackInSlot(0), heat, 1.0D);
-				
+
 				
 				if(this.heat > this.maxHeat()) {
 					this.meltdown();
@@ -81,7 +88,7 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 				//for spreading, we want the buffered flux to be 0 because we want to know exactly how much gets reflected back
 				this.fluxFast = 0;
 				this.fluxSlow = 0;
-				
+
 				spreadFlux(rType, fluxOut);
 				
 				hasRod = true;
@@ -263,7 +270,7 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 		
 		boolean corium = inventory.getStackInSlot(0).getItem() instanceof ItemRBMKRod;
 		
-		if(corium && inventory.getStackInSlot(0).getItem() == ModItems.rbmk_fuel_drx) 
+		if(corium && inventory.getStackInSlot(0).getItem() == ModItems.rbmk_fuel_drx)
 			RBMKBase.digamma = true;
 		
 		inventory.setStackInSlot(0, ItemStack.EMPTY);
@@ -348,5 +355,32 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 	@Override
 	public int[] getAccessibleSlotsFromSide(EnumFacing e) {
 		return new int[] {0};
+	}
+
+	// do some opencomputer stuff
+	@Override
+    	public String getComponentName() {
+		if (isModerated() == true) {
+        		return "rbmk_moderated_fuel_rod";
+		}
+        	return "rbmk_fuel_rod";
+	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getHeat(Context context, Arguments args) {
+		return new Object[] {heat};
+	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getFluxSlow(Context context, Arguments args) {
+		return new Object[] {fluxSlow};
+	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getFluxFast(Context context, Arguments args) {
+		return new Object[] {fluxFast};
 	}
 }
