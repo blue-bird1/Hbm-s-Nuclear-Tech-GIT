@@ -383,4 +383,24 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 	public Object[] getFluxFast(Context context, Arguments args) {
 		return new Object[] {fluxFast};
 	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getDepletion(Context context, Arguments args) {
+		inventory.getStackInSlot(0);
+		if(inventory.getStackInSlot(0).getItem() instanceof ItemRBMKRod) {
+			return new Object[] {ItemRBMKRod.getEnrichment(inventory.getStackInSlot(0))};
+		}
+		return new Object[] {"N/A"};
+	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getXenonPoison(Context context, Arguments args) {
+		inventory.getStackInSlot(0);
+		if(inventory.getStackInSlot(0).getItem() instanceof ItemRBMKRod) {
+			return new Object[] {ItemRBMKRod.getPoison(inventory.getStackInSlot(0))};
+		}
+		return new Object[] {"N/A"};
+	}
 }
