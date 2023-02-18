@@ -5,6 +5,8 @@ import java.util.List;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.IControlReceiver;
 import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.packet.FluidTankPacket;
+import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKConsole.ColumnType;
 
@@ -22,6 +24,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
 
@@ -38,6 +41,8 @@ public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements I
 
     @Override
     public void update() {
+        PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos,   tank), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 50));
+
         double xCoord = pos.getX();
         double yCoord = pos.getY();
         double zCoord = pos.getZ();
@@ -70,20 +75,20 @@ public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements I
 
             if (this.lastCooled > 100) {
                 for (int i = 0; i < 2; i++) {
-                    world.spawnParticle(EnumParticleTypes.valueOf("flame"), xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.2, 0);
-                    world.spawnParticle(EnumParticleTypes.valueOf("smoke"), xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.2, 0);
+                    world.spawnParticle(EnumParticleTypes.FLAME, xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.2, 0);
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.2, 0);
                 }
 
                 if (world.rand.nextInt(20) == 0)
-                    world.spawnParticle(EnumParticleTypes.valueOf("lava"), xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.0, 0);
+                    world.spawnParticle(EnumParticleTypes.LAVA, xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.0, 0);
             } else if (this.lastCooled > 50) {
                 for (int i = 0; i < 2; i++) {
-                    world.spawnParticle(EnumParticleTypes.valueOf("cloud"), xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, world.rand.nextGaussian() * 0.05, 0.2, world.rand.nextGaussian() * 0.05);
+                    world.spawnParticle(EnumParticleTypes.CLOUD, xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, world.rand.nextGaussian() * 0.05, 0.2, world.rand.nextGaussian() * 0.05);
                 }
             } else if (this.lastCooled > 0) {
 
                 if (world.getTotalWorldTime() % 2 == 0)
-                    world.spawnParticle(EnumParticleTypes.valueOf("cloud"), xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.2, 0);
+                    world.spawnParticle(EnumParticleTypes.CLOUD, xCoord + 0.25 + world.rand.nextDouble() * 0.5, yCoord + 4.5, zCoord + 0.25 + world.rand.nextDouble() * 0.5, 0, 0.2, 0);
 
             }
         }
@@ -105,12 +110,13 @@ public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements I
 
         tank.writeToNBT(nbt.getCompoundTag("cryo"));
         nbt.setInteger("cooled", this.lastCooled);
+        nbt.setTag("cryo",tank.writeToNBT(new NBTTagCompound()));
         return nbt;
     }
 
     @Override
     public ColumnType getConsoleType() {
-        return ColumnType.BLANK;
+        return ColumnType.COOLER;
     }
 
     @Override
@@ -163,6 +169,13 @@ public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements I
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing){
         return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
+        return super.getCapability(capability, facing);
     }
 
     @Override
