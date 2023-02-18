@@ -3523,6 +3523,7 @@ tile.rbmk_rod_reasim_mod.name= RBMK反应堆慢化燃料棒(ReaSim)
 tile.rbmk_steam_inlet.name=RBMK ReaSim 进水口
 tile.rbmk_steam_outlet.name=RBMK ReaSim 蒸汽出口
 tile.rbmk_storage.name=RBMK 储存柱
+tile.rbmk_cooler.name=RBMK冷却器
 tile.reactor_computer.name=反应堆控制器
 tile.reactor_conductor.name=反应堆锅炉
 tile.reactor_control.name=控制棒

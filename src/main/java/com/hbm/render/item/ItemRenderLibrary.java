@@ -1126,6 +1126,7 @@ public class ItemRenderLibrary {
 		renderers.put(Item.getItemFromBlock(ModBlocks.rbmk_moderator), rbmkPassive);
 		renderers.put(Item.getItemFromBlock(ModBlocks.rbmk_outgasser), rbmkPassive);
 		renderers.put(Item.getItemFromBlock(ModBlocks.rbmk_storage), rbmkPassive);
+		renderers.put(Item.getItemFromBlock(ModBlocks.rbmk_cooler), rbmkPassive);
 		
 		renderers.put(Item.getItemFromBlock(ModBlocks.machine_bat9000), new ItemRenderBase() {
 			public void renderInventory() {

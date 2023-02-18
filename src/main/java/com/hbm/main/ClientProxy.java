@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.tileentity.machine.rbmk.*;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -553,19 +554,6 @@ import com.hbm.tileentity.machine.TileEntityTesla;
 import com.hbm.tileentity.machine.TileEntityTowerLarge;
 import com.hbm.tileentity.machine.TileEntityTowerSmall;
 import com.hbm.tileentity.machine.TileEntityVaultDoor;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKAbsorber;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKBlank;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKBoiler;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKConsole;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKCraneConsole;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKControlAuto;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKControlManual;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKModerator;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKOutgasser;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKReflector;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKRod;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKRodReaSim;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKStorage;
 import com.hbm.tileentity.turret.TileEntityTurretBrandon;
 import com.hbm.tileentity.turret.TileEntityTurretCIWS;
 import com.hbm.tileentity.turret.TileEntityTurretCheapo;
@@ -822,6 +810,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRBMKAbsorber.class, new RenderRBMKLid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRBMKBlank.class, new RenderRBMKLid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRBMKBoiler.class, new RenderRBMKLid());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRBMKCooler.class, new RenderRBMKLid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRBMKModerator.class, new RenderRBMKLid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRBMKOutgasser.class, new RenderRBMKLid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRBMKStorage.class, new RenderRBMKLid());
@@ -1791,7 +1780,7 @@ public class ClientProxy extends ServerProxy {
 			ParticleCoolingTower fx = new ParticleCoolingTower(world, x, y, z, data.getFloat("base"));
 			fx.setLift(data.getFloat("lift"));
 			fx.setBaseScale(data.getFloat("base"));
-			fx.setMaxScale(data.getFloat("max"));
+			fx.setMaxScale((float) (data.getFloat("max")*0.5));
 			fx.setLife(data.getInteger("life"));
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		}
