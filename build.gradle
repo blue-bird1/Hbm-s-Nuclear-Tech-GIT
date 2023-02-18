@@ -1,21 +1,23 @@
 buildscript {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
         maven { url = "https://maven.minecraftforge.net/" }
-		maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://files.minecraftforge.net/maven" }
         mavenCentral()
-		maven {
-    // location of the maven that hosts JEI files
-    name = "Progwml6 maven"
-    url = "https://dvs1.progwml6.com/files/maven/"
-  }
-  maven {
-    // location of a maven mirror for JEI files, as a fallback
-    name = "ModMaven"
-    url = "https://modmaven.k-4u.nl"
-  }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        maven {
+            // location of the maven that hosts JEI files
+            name = "Progwml6 maven"
+            url = "https://dvs1.progwml6.com/files/maven/"
+        }
+        maven {
+            // location of a maven mirror for JEI files, as a fallback
+            name = "ModMaven"
+            url = "https://modmaven.k-4u.nl"
+        }
+        dependencies {
+            classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        }
     }
 }
         
@@ -149,3 +151,6 @@ publishing {
         }
     }
 }
+
+
+

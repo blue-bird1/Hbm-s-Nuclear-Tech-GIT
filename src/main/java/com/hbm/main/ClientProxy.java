@@ -1791,7 +1791,7 @@ public class ClientProxy extends ServerProxy {
 			ParticleCoolingTower fx = new ParticleCoolingTower(world, x, y, z, data.getFloat("base"));
 			fx.setLift(data.getFloat("lift"));
 			fx.setBaseScale(data.getFloat("base"));
-			fx.setMaxScale(data.getFloat("max"));
+			fx.setMaxScale((float) (data.getFloat("max")*0.5));
 			fx.setLife(data.getInteger("life"));
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		}

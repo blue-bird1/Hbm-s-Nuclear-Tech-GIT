@@ -100,28 +100,26 @@ public class ItemForgeFluidIdentifier extends Item implements IHasCustomModel {
 	public static void spreadType(World worldIn, BlockPos pos, Fluid hand, Fluid pipe, int x){
 		if(x > 0){
 			TileEntity te = worldIn.getTileEntity(pos);
-			if(te != null && te instanceof TileEntityFFFluidDuctMk2){
+			if(te instanceof TileEntityFFFluidDuctMk2){
 				TileEntityFFFluidDuctMk2 duct = (TileEntityFFFluidDuctMk2) te;
-				if(duct.getType() == pipe){
-					duct.setType(hand);
-					spreadType(worldIn, pos.add(1, 0, 0), hand, pipe, x-1);
-					spreadType(worldIn, pos.add(0, 1, 0), hand, pipe, x-1);
-					spreadType(worldIn, pos.add(0, 0, 1), hand, pipe, x-1);
-					spreadType(worldIn, pos.add(-1, 0, 0), hand, pipe, x-1);
-					spreadType(worldIn, pos.add(0, -1, 0), hand, pipe, x-1);
-					spreadType(worldIn, pos.add(0, 0, -1), hand, pipe, x-1);
-				}
+
+				duct.setType(hand);
+				spreadType(worldIn, pos.add(1, 0, 0), hand, pipe, x-1);
+				spreadType(worldIn, pos.add(0, 1, 0), hand, pipe, x-1);
+				spreadType(worldIn, pos.add(0, 0, 1), hand, pipe, x-1);
+				spreadType(worldIn, pos.add(-1, 0, 0), hand, pipe, x-1);
+				spreadType(worldIn, pos.add(0, -1, 0), hand, pipe, x-1);
+				spreadType(worldIn, pos.add(0, 0, -1), hand, pipe, x-1);
+
 			}
 		}
 	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(player.isSneaking()){
-			spreadType(worldIn, pos, null, getType(player.getHeldItem(hand)), 8);
-		}else{
-			spreadType(worldIn, pos, getType(player.getHeldItem(hand)), null, 8);
-		}
+
+		spreadType(worldIn, pos, getType(player.getHeldItem(hand)), null, 8);
+
 
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}

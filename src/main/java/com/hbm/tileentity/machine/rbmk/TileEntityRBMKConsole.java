@@ -276,7 +276,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 		OUTGASSER(80),
 		BREEDER(100),
 		STORAGE(110);
-		
+
 		public int offset;
 		
 		private ColumnType(int offset) {
