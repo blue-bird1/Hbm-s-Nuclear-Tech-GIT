@@ -286,8 +286,9 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 		BREEDER(100),
 		STORAGE(110),
 
-		COOLER(120);
-
+		COOLER(120),
+        HEATEX(130);
+		
 		public int offset;
 		
 		private ColumnType(int offset) {
@@ -295,7 +296,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 		}
 	}
 
-	// opencomputers interface 
+	// opencomputers interface
 
 	@Override
 	public String getComponentName() {
@@ -325,7 +326,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 		column_data.add(Double.toString(columns[i].data.getDouble("c_coreHeat")));
 		column_data.add(Double.toString(columns[i].data.getDouble("c_maxHeat")));
 
-		return new Object[] {column_data}; 
+		return new Object[] {column_data};
 	}
 
 	@Callback(doc = "func(x:str, i:str): sets column at index i to level x given 100>=x>=0")
@@ -333,18 +334,18 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 		double new_level = Double.parseDouble(args.checkString(0))/100.0;
 		int x = Integer.parseInt(args.checkString(1)) % 15 - 7;
 		int z = Integer.parseInt(args.checkString(1)) / 15 - 7;
-		
+
 		TileEntity te = world.getTileEntity(new BlockPos(targetX + x, targetY, targetZ + z));
-		
+
 		if (te instanceof TileEntityRBMKControlManual) {
 			TileEntityRBMKControlManual rod = (TileEntityRBMKControlManual) te;
 			rod.startingLevel = rod.level;
-			if (new_level > 1) { 
+			if (new_level > 1) {
 				new_level = 1;
 			}
 			rod.setTarget(new_level);
 			te.markDirty();
-		}	
+		}
 
 		return new Object[] {};
 	}
@@ -355,14 +356,14 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 
 		int x = Integer.parseInt(args.checkString(1)) % 15 - 7;
 		int z = Integer.parseInt(args.checkString(1)) / 15 - 7;
-		
+
 		TileEntity te = world.getTileEntity(new BlockPos(targetX + x, targetY, targetZ + z));
 
 		if (te instanceof TileEntityRBMKControlManual) {
 			TileEntityRBMKControlManual rod = (TileEntityRBMKControlManual) te;
 			rod.setColor(new_color);
 			te.markDirty();
-		}	
+		}
 
 		return new Object[] {};
 	}

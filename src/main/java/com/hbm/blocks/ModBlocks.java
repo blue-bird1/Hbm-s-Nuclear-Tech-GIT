@@ -976,7 +976,10 @@ public class ModBlocks {
 	public static final Block rbmk_loader = new BlockBaseVisualFluidConnectable(Material.IRON, "rbmk_loader").addFluids(FluidRegistry.WATER, ModForgeFluids.steam, ModForgeFluids.hotsteam, ModForgeFluids.superhotsteam, ModForgeFluids.ultrahotsteam).setHardness(15.0F).setResistance(100.0F).setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(60.0F);
 	public static final Block rbmk_steam_inlet = new RBMKInlet(Material.IRON, "rbmk_steam_inlet").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
 	public static final Block rbmk_steam_outlet = new RBMKOutlet(Material.IRON, "rbmk_steam_outlet").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
-	public static final Block rbmk_cooler = new RBMKCooler("rbmk_cooler","rbmk_cooler").setCreativeTab(MainRegistry.machineTab);
+	public static final Block rbmk_cooler = new RBMKCooler("rbmk_cooler","rbmk_cooler").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
+
+	public static final Block rbmk_heater  = new RBMKHeater("rbmk_heater","rbmk_heater").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
+	public static final Block rbmk_heatex = new RBMKHeatex(Material.IRON,"rbmk_heatex").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
 	public static final Block pribris = new RBMKDebris("pribris").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(600.0F);
 	public static final Block pribris_burning = new RBMKDebrisBurning("pribris_burning").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(600.0F);
 	public static final Block pribris_radiating = new RBMKDebrisRadiating("pribris_radiating").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(600.0F);

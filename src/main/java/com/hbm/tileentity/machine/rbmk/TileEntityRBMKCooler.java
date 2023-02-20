@@ -28,14 +28,12 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
 
-public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements IFluidHandler,ITankPacketAcceptor, IControlReceiver {
+public class TileEntityRBMKCooler extends TileEntityRBMKActiveBase implements IFluidHandler,ITankPacketAcceptor, IControlReceiver {
 
     public FluidTank tank;
     public int lastCooled;
 
     public TileEntityRBMKCooler() {
-        super(0);
-
         this.tank = new FluidTank(8000);
     }
 
