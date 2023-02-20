@@ -30,8 +30,8 @@ import javax.annotation.Nullable;
 
 public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements IFluidHandler,ITankPacketAcceptor, IControlReceiver {
 
-    private FluidTank tank;
-    private int lastCooled;
+    public FluidTank tank;
+    public int lastCooled;
 
     public TileEntityRBMKCooler() {
         super(0);
@@ -41,7 +41,7 @@ public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements I
 
     @Override
     public void update() {
-        PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos,   tank), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 50));
+        PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos,  tank), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 50));
 
         double xCoord = pos.getX();
         double yCoord = pos.getY();
@@ -168,11 +168,12 @@ public class TileEntityRBMKCooler extends TileEntityRBMKSlottedBase implements I
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing){
-        return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+        return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && facing !=null) || super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+
         if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
         return super.getCapability(capability, facing);
