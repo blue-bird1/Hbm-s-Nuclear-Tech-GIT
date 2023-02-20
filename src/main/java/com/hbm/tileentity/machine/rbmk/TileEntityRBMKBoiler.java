@@ -26,9 +26,16 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
-public class TileEntityRBMKBoiler extends TileEntityRBMKSlottedBase implements IFluidHandler, ITankPacketAcceptor, IControlReceiver {
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
+
+@Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
+public class TileEntityRBMKBoiler extends TileEntityRBMKSlottedBase implements IFluidHandler, ITankPacketAcceptor, IControlReceiver,SimpleComponent  {
 	
 	public FluidTank feed;
 	public FluidTank steam;
@@ -273,5 +280,39 @@ public class TileEntityRBMKBoiler extends TileEntityRBMKSlottedBase implements I
 		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
 			return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
 		return super.getCapability(capability, facing);
+	}
+
+	// do some opencomputer stuff
+	@Override
+	public String getComponentName() {
+		return "rbmk_boiler";
+	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getHeat(Context context, Arguments args) {
+		return new Object[] {heat};
+	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getSteam(Context context, Arguments args) {
+		return new Object[] {steam.getFluidAmount()};
+	}
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getSteamMax(Context context, Arguments args) {
+		return new Object[] {steam.getCapacity()};
+	}
+
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getWater(Context context, Arguments args) {
+		return new Object[] {feed.getFluidAmount()};
+	}
+	@Callback
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getWaterMax(Context context, Arguments args) {
+		return new Object[] {feed.getCapacity()};
 	}
 }
