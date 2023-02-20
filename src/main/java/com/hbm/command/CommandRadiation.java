@@ -26,7 +26,7 @@ public class CommandRadiation extends CommandBase {
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		return "Usage: /hbmrad <block x> <block z> <new rad> \n /hbmrad <clearall/reset> \n or /hbmrad player <player> <newRad>";
+		return "Usage: /hbmrad <block x> <block y>  <block z> <new rad> \n /hbmrad <clearall/reset> \n or /hbmrad player <player> <newRad>";
 	}
 
 	@Override
@@ -47,10 +47,13 @@ public class CommandRadiation extends CommandBase {
 		} else if (args.length == 2 && args[0].equals("set")){
 			list.add(String.valueOf(sender.getPosition().getX()));
 		} else if (args.length == 3 && args[0].equals("set")){
-			list.add(String.valueOf(sender.getPosition().getZ()));
+			list.add(String.valueOf(sender.getPosition().getY()));
 		} else if (args.length == 4 && args[0].equals("set")){
+			list.add(String.valueOf(sender.getPosition().getZ()));
+		} else if (args.length == 5 && args[0].equals("set")){
 			list.add(String.valueOf(0));
-		} else if(args.length == 3 && getPlayer(server, args[1]) != null){
+		}
+		else if(args.length == 3 && getPlayer(server, args[1]) != null){
 			list.add(String.valueOf(0));
 		}
 		return list;
@@ -63,7 +66,7 @@ public class CommandRadiation extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		if (args.length == 4 && args[0].equals("set") && isInteger(args[1]) && isInteger(args[2]) && isInteger(args[3])) {
+		if (args.length == 5 && args[0].equals("set") && isInteger(args[1]) && isInteger(args[2]) && isInteger(args[3])) {
 			int blockX;
 			int blockY;
 			int blockZ;
@@ -80,7 +83,7 @@ public class CommandRadiation extends CommandBase {
 				blockZ = sender.getPosition().getZ();
 			else
 				blockZ = Integer.parseInt(args[3]);
-			amount = Integer.parseInt(args[3]);
+			amount = Integer.parseInt(args[4]);
 			RadiationSavedData.getData(sender.getEntityWorld()).setRadForCoord(new BlockPos(blockX, blockY, blockZ), amount);
 			sender.sendMessage(new TextComponentTranslation(
 					"Set radiation at coords (" + blockX + ", " + blockY + ", " + blockZ + ") to " + amount + "."));
