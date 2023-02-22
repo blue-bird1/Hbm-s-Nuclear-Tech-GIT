@@ -757,6 +757,9 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityRBMKCraneConsole.class, new ResourceLocation(RefStrings.MODID, "tileentity_rbmk_crane_console"));
 		GameRegistry.registerTileEntity(TileEntityRBMKInlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_rbmk_inlet"));
 		GameRegistry.registerTileEntity(TileEntityRBMKCooler.class, new ResourceLocation(RefStrings.MODID, "tileentity_rbmk_cooler"));
+		GameRegistry.registerTileEntity(TileEntityRBMKHeater.class, new ResourceLocation(RefStrings.MODID, "tileentity_rbmk_heater"));
+		GameRegistry.registerTileEntity(TileEntityHeatex.class, new ResourceLocation(RefStrings.MODID, "tileentity_rbmk_heatex"));
+
 		GameRegistry.registerTileEntity(TileEntityRBMKOutlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_rbmk_outlet"));
 		GameRegistry.registerTileEntity(TileEntityStorageDrum.class, new ResourceLocation(RefStrings.MODID, "tileentity_storage_drum"));
 		GameRegistry.registerTileEntity(TileEntityPileFuel.class, new ResourceLocation(RefStrings.MODID, "tileentity_pile_fuel"));

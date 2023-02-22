@@ -2,23 +2,18 @@ package com.hbm.blocks.machine.rbmk;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
-import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.rbmk.TileEntityHeatex;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKBoiler;
-
+import com.hbm.tileentity.machine.rbmk.TileEntityRBMKHeater;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
-import com.hbm.tileentity.machine.rbmk.TileEntityRBMKHeater;
 import net.minecraftforge.fluids.Fluid;
 
 public class RBMKHeatex extends BlockContainer{
@@ -28,6 +23,7 @@ public class RBMKHeatex extends BlockContainer{
 		super(mat);
 		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
+		ModBlocks.ALL_BLOCKS.add(this);
 	}
 
 	@Override
@@ -62,4 +58,8 @@ public class RBMKHeatex extends BlockContainer{
 		return false;
 	}
 
+	@Override
+	public EnumBlockRenderType getRenderType(IBlockState state){
+		return EnumBlockRenderType.MODEL;
+	}
 }

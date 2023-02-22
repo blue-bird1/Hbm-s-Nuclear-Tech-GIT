@@ -16,10 +16,7 @@ public class NukeTab extends CreativeTabs {
 
 	@Override
 	public ItemStack getTabIconItem() {
-		if(ModBlocks.float_bomb != null){
-			return new ItemStack(Item.getItemFromBlock(ModBlocks.float_bomb));
-		}
-		return new ItemStack(Items.IRON_PICKAXE);
+		return new ItemStack(Item.getItemFromBlock(ModBlocks.float_bomb));
 	}
 
 }

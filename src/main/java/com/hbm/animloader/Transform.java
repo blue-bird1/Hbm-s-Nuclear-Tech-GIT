@@ -129,5 +129,41 @@ public class Transform {
 	    					s0*v0.z + s1*v1.z, 
 	    					s0*v0.w + s1*v1.w);
 	}
-	
+
+	public static FloatBuffer quatToGlMatrix(FloatBuffer buf, Quaternion q) {
+		buf.clear();
+		float xx = q.x * q.x;
+		float xy = q.x * q.y;
+		float xz = q.x * q.z;
+		float xw = q.x * q.w;
+		float yy = q.y * q.y;
+		float yz = q.y * q.z;
+		float yw = q.y * q.w;
+		float zz = q.z * q.z;
+		float zw = q.z * q.w;
+
+		//Bob: i may not know what a quarternion is but grouping these in parts of 4 looks nice
+		buf.put(1.0F - 2.0F * (yy + zz));
+		buf.put(2.0F * (xy + zw));
+		buf.put(2.0F * (xz - yw));
+		buf.put(0.0F);
+
+		buf.put(2.0F * (xy - zw));
+		buf.put(1.0F - 2.0F * (xx + zz));
+		buf.put(2.0F * (yz + xw));
+		buf.put(0.0F);
+
+		buf.put(2.0F * (xz + yw));
+		buf.put(2.0F * (yz - xw));
+		buf.put(1.0F - 2.0F * (xx + yy));
+		buf.put(0.0F);
+
+		buf.put(0.0F);
+		buf.put(0.0F);
+		buf.put(0.0F);
+		buf.put(1.0F);
+
+		buf.rewind();
+		return buf;
+	}
 }

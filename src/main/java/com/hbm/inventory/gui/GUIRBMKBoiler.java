@@ -2,11 +2,11 @@ package com.hbm.inventory.gui;
 
 import java.io.IOException;
 
+import com.hbm.inventory.container.ContainerRBMKGeneric;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.inventory.container.ContainerRBMKBoiler;
 import com.hbm.lib.RefStrings;
 import com.hbm.packet.NBTControlPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -25,9 +25,9 @@ public class GUIRBMKBoiler extends GuiInfoContainer {
 	private static ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/reactors/gui_rbmk_boiler.png");
 	private TileEntityRBMKBoiler boiler;
 
-	public GUIRBMKBoiler(InventoryPlayer invPlayer, TileEntityRBMKBoiler tedf) {
-		super(new ContainerRBMKBoiler(invPlayer, tedf));
-		boiler = tedf;
+	public GUIRBMKBoiler(InventoryPlayer invPlayer, TileEntityRBMKBoiler tile) {
+		super(new ContainerRBMKGeneric(invPlayer));
+		boiler = tile;
 		
 		this.xSize = 176;
 		this.ySize = 186;
@@ -39,7 +39,7 @@ public class GUIRBMKBoiler extends GuiInfoContainer {
 
 		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 126, guiTop + 24, 16, 56, boiler.feed);
 		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 89, guiTop + 39, 8, 28, boiler.steam);
-		
+
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
 

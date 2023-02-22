@@ -219,6 +219,13 @@ public class ModForgeFluids {
         if (!FluidRegistry.registerFluid(plasma_bf))
             plasma_bf = FluidRegistry.getFluid("plasma_bf");
 
+        if (!FluidRegistry.registerFluid(coolant_hot))
+            coolant_hot = FluidRegistry.getFluid("coolant_hot");
+        if (!FluidRegistry.registerFluid(mug))
+            mug = FluidRegistry.getFluid("mug");
+        if (!FluidRegistry.registerFluid(mug_hot))
+            mug_hot = FluidRegistry.getFluid("mug_hot");
+
         if (!FluidRegistry.registerFluid(pain))
             pain = FluidRegistry.getFluid("pain");
         if (!FluidRegistry.registerFluid(wastefluid))

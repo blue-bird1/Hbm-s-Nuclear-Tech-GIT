@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.entity.projectile.EntityRBMKDebris;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.lib.Library;
@@ -11,11 +12,14 @@ import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKConsole.ColumnType;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -31,6 +35,9 @@ public class TileEntityRBMKHeater extends TileEntityRBMKSlottedBase implements I
 	
 	public TileEntityRBMKHeater() {
 		super(1);
+		this.feed = new FluidTank(16_000 );
+		this.steam = new FluidTank(16_000);
+		this.steamType = ModForgeFluids.coolant;
 	}
 
 	@Override
@@ -52,24 +59,27 @@ public class TileEntityRBMKHeater extends TileEntityRBMKSlottedBase implements I
 			
 			double heatCap = getConversionHeat(steamType);
 			Fluid type = getConversion(steamType);
-			double heatProvided = this.heat - heatCap;
-			
-			if(heatProvided > 0) {
-				
-				int converted = (int)Math.floor(heatProvided / RBMKDials.getBoilerHeatConsumption(world));
-				converted = Math.min(converted, feed.getFluidAmount());
-				converted = Math.min(converted, steam.getCapacity()- steam.getFluidAmount());
-				feed.drain(converted, true);
-				steam.fill(new FluidStack(type, converted), true);
-				this.heat -= converted * RBMKDials.getBoilerHeatConsumption(world);
+			if(type != null){
+				double heatProvided = this.heat - heatCap;
+
+				if(heatProvided > 0) {
+
+					int converted = (int)Math.floor(heatProvided / RBMKDials.getBoilerHeatConsumption(world));
+					converted = Math.min(converted, feed.getFluidAmount());
+					converted = Math.min(converted, steam.getCapacity()- steam.getFluidAmount());
+					feed.drain(converted, true);
+					steam.fill(new FluidStack(type, converted), true);
+					this.heat -= converted * RBMKDials.getBoilerHeatConsumption(world);
+				}
 			}
+
 			
 			fillFluidInit(steam);
 		}
 		
 		super.update();
 	}
-	
+
 	public static double getConversionHeat(Fluid type) {
 
 		Fluid f =  getConversion(type) ;
@@ -78,7 +88,7 @@ public class TileEntityRBMKHeater extends TileEntityRBMKSlottedBase implements I
 		}
 	    return 0;
 	}
-	
+
 	public static Fluid getConversion(Fluid type) {
 		if(type == ModForgeFluids.mug)		return ModForgeFluids.mug_hot;
 		if(type == ModForgeFluids.coolant)	return ModForgeFluids.coolant_hot;
@@ -113,18 +123,6 @@ public class TileEntityRBMKHeater extends TileEntityRBMKSlottedBase implements I
 	public void fillFluid(int x, int y, int z, FluidTank tank) {
 		FFUtils.fillFluid(this, tank, world, new BlockPos(x, y, z), tank.getCapacity());
 	}
-
-	public void setTypeForSync(Fluid type, int index) {
-
-		if(index == 0)
-			steamType = type;
-			// feed.setTankType(type);
-		else if(index == 1)
-			steamType = type;
-			// steam.setTankType(type);
-	}
-	
-
 
 	@Override
 	public IFluidTankProperties[] getTankProperties() {
@@ -174,5 +172,45 @@ public class TileEntityRBMKHeater extends TileEntityRBMKSlottedBase implements I
 		nbt.setTag("steam", steam.writeToNBT(new NBTTagCompound()));
 		nbt.setString("steamType", steamType.getName());
 		return nbt;
+	}
+
+	@Override
+	public void onMelt(int reduce) {
+
+		int count = 1 + world.rand.nextInt(2);
+
+		for(int i = 0; i < count; i++) {
+			spawnDebris(EntityRBMKDebris.DebrisType.BLANK);
+		}
+
+		super.onMelt(reduce);
+	}
+
+	@Override
+	public NBTTagCompound getNBTForConsole() {
+		NBTTagCompound data = new NBTTagCompound();
+		data.setInteger("water", this.feed.getFluidAmount());
+		data.setInteger("maxWater", this.feed.getCapacity());
+		data.setInteger("steam", this.steam.getFluidAmount());
+		data.setInteger("maxSteam", this.steam.getCapacity());
+		data.setString("type", this.steamType.getName());
+		Fluid hottype = getConversion(this.steamType);
+		if(hottype != null){
+			data.setString("hottype", hottype.getName());
+		}
+
+		return data;
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+		return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+	}
+
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+			return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
+		return super.getCapability(capability, facing);
 	}
 }

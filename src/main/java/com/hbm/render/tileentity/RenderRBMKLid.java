@@ -12,6 +12,7 @@ import com.hbm.render.amlfrom1710.IModelCustom;
 import com.hbm.tileentity.machine.rbmk.RBMKDials;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKBase;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKBoiler;
+import com.hbm.tileentity.machine.rbmk.TileEntityRBMKHeater;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKRod;
 
 import net.minecraft.client.renderer.BufferBuilder;
@@ -59,6 +60,8 @@ public class RenderRBMKLid extends TileEntitySpecialRenderer<TileEntityRBMKBase>
 		RBMKBase block = (RBMKBase)control.getBlockType();
 		IModelCustom columnModel = ResourceManager.rbmk_reflector;
 		if(block == ModBlocks.rbmk_boiler)
+			columnModel = ResourceManager.rbmk_rods;
+		if(block == ModBlocks.rbmk_heater)
 			columnModel = ResourceManager.rbmk_rods;
 		else if(block instanceof RBMKRod)
 			columnModel = ResourceManager.rbmk_element;
@@ -110,7 +113,7 @@ public class RenderRBMKLid extends TileEntitySpecialRenderer<TileEntityRBMKBase>
 				cherenkov = false;
 			}
 			
-			if(control instanceof TileEntityRBMKBoiler && meta != RBMKBase.DIR_GLASS_LID.ordinal())
+			if((control instanceof TileEntityRBMKBoiler || control instanceof TileEntityRBMKHeater) && meta != RBMKBase.DIR_GLASS_LID.ordinal())
 				ResourceManager.rbmk_rods.renderPart("Lid");
 			ResourceManager.rbmk_element.renderPart("Lid");
 			GL11.glPopMatrix();
