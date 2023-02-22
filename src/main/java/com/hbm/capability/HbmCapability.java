@@ -38,6 +38,13 @@ public class HbmCapability {
 		
 		public boolean enableBackpack = true;
 		public boolean enableHUD = true;
+
+
+
+		public float shield = 0;
+		public float maxShield = 0;
+		public int lastDamage = 0;
+		public static final float shieldCap = 100;
 		
 		@Override
 		public boolean getKeyPressed(EnumKeybind key) {
@@ -86,6 +93,10 @@ public class HbmCapability {
 		@Override
 		public void setEnableHUD(boolean b){
 			enableHUD = b;
+		}
+
+		public float getMaxShield() {
+			return this.maxShield;
 		}
 		
 	}

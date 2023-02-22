@@ -80,17 +80,7 @@ import com.hbm.items.bomb.ItemMike;
 import com.hbm.items.bomb.ItemN2;
 import com.hbm.items.bomb.ItemSolinium;
 import com.hbm.items.bomb.ItemTsar;
-import com.hbm.items.food.ItemAppleEuphemium;
-import com.hbm.items.food.ItemCanteen;
-import com.hbm.items.food.ItemEnergy;
-import com.hbm.items.food.ItemFoodBase;
-import com.hbm.items.food.ItemFoodHazard;
-import com.hbm.items.food.ItemHazardSoup;
-import com.hbm.items.food.ItemLemon;
-import com.hbm.items.food.ItemNugget;
-import com.hbm.items.food.ItemPancake;
-import com.hbm.items.food.ItemPill;
-import com.hbm.items.food.ItemTemFlakes;
+import com.hbm.items.food.*;
 import com.hbm.items.gear.ArmorAustralium;
 import com.hbm.items.gear.ArmorEuphemium;
 import com.hbm.items.gear.ArmorFSB;
@@ -1712,6 +1702,11 @@ public class ModItems {
 	public static final Item peas = new ItemPeas("peas").setCreativeTab(MainRegistry.consumableTab);
 	public static final Item marshmallow = new ItemBase("marshmallow").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.consumableTab);
 	public static final Item marshmallow_roasted = new ItemBase("marshmallow_roasted").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.consumableTab);
+	public static final Item crayon = new ItemCrayon(0, 0, false,"crayon").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
+
+	public static final Item empty_flask = new ItemFlask(0,0, false, "flask_empty").setMaxStackSize(64).setCreativeTab(MainRegistry.consumableTab);
+	public static final Item radpot_flask = new ItemFlask(0,0, false, "flask_radpot").setMaxStackSize(64).setCreativeTab(MainRegistry.consumableTab);
+	public static final Item shield_flask = new ItemFlask(0,0, false, "flask_shield").setMaxStackSize(64).setCreativeTab(MainRegistry.consumableTab);
 	//Bongespob arcarmoni
 	public static final Item spongebob_macaroni = new ItemLemon(5, 5, false, "spongebob_macaroni").setCreativeTab(MainRegistry.consumableTab);
 	
