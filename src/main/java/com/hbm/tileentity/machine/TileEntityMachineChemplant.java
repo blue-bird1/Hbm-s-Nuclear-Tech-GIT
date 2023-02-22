@@ -484,8 +484,7 @@ public class TileEntityMachineChemplant extends TileEntityMachineBase implements
 		if(Library.isArrayEmpty(fluids))
 			return true;
 		
-		if((fluids[0] == null || fluids[0] != null && fluids[0].amount <= tanks[0].getFluidAmount()) && 
-				(fluids[1] == null || fluids[1] != null && fluids[1].amount <= tanks[1].getFluidAmount()))
+		if((fluids[0] == null || fluids[0].amount <= tanks[0].getFluidAmount()) && (fluids[1] == null || fluids[1].amount <= tanks[1].getFluidAmount()))
 			return true;
 		
 		return false;
@@ -494,8 +493,7 @@ public class TileEntityMachineChemplant extends TileEntityMachineBase implements
 	public boolean hasSpaceForFluids(FluidStack[] fluids) {
 		if(Library.isArrayEmpty(fluids))
 			return true;
-		if(((fluids[0] == null || fluids[0] != null && tanks[2].fill(fluids[0], false) == fluids[0].amount) && 
-				(fluids[1] == null || fluids[1] != null && tanks[3].fill(fluids[1], false) == fluids[1].amount)))
+		if((fluids[0] == null || tanks[2].fill(fluids[0], false) == fluids[0].amount) && (fluids[1] == null || fluids[1] != null && tanks[3].fill(fluids[1], false) == fluids[1].amount))
 			return true;
 		
 		return false;

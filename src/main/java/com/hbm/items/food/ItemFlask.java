@@ -4,6 +4,8 @@ import com.hbm.capability.HbmCapability;
 
 import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.items.ModItems;
+import com.hbm.items.machine.ItemChemicalDye;
+import com.hbm.util.EnumUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemFood;
 import net.minecraft.util.ActionResult;
@@ -16,7 +18,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemFlask extends ItemFoodBase implements IHasCustomModel {
+public class ItemFlask extends ItemFoodBase {
 
     public ItemFlask(int amount, float saturation, boolean isWolfFood, String s) {
         super(amount, saturation, isWolfFood, s);
@@ -26,11 +28,6 @@ public class ItemFlask extends ItemFoodBase implements IHasCustomModel {
 
     public static enum EnumInfusion {
         SHIELD
-    }
-
-    @Override
-    public ModelResourceLocation getResourceLocation() {
-        return null;
     }
 
 
@@ -74,4 +71,18 @@ public class ItemFlask extends ItemFoodBase implements IHasCustomModel {
         player.setActiveHand(handIn);
         return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, player.getHeldItem(handIn));
     }
+
+    @Override
+    public String getUnlocalizedName()
+    {
+        return this.getUnlocalizedName();
+    }
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        // todo
+        Enum num = EnumUtil.grabEnumSafely(EnumInfusion.class, stack.getItemDamage());
+        return super.getUnlocalizedName() + "." + num.name().toLowerCase();
+    }
+
+
 }
