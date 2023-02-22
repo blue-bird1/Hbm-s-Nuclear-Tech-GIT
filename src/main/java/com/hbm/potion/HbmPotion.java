@@ -173,7 +173,7 @@ public class HbmPotion extends Potion {
 		if(this == lead) {
 
 			int k = 60;
-	        return k > 0 ? par1 % k == 0 : true;
+	        return par1 % k == 0;
 		}
 		
 		return false;
