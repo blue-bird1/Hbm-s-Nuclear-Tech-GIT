@@ -3,42 +3,7 @@ package com.hbm.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hbm.blocks.bomb.Balefire;
-import com.hbm.blocks.bomb.BlockCloudResidue;
-import com.hbm.blocks.bomb.BlockCrashedBomb;
-import com.hbm.blocks.bomb.BlockFireworks;
-import com.hbm.blocks.bomb.BlockSemtex;
-import com.hbm.blocks.bomb.BlockTaint;
-import com.hbm.blocks.bomb.BlockVolcano;
-import com.hbm.blocks.bomb.BombFlameWar;
-import com.hbm.blocks.bomb.BombFloat;
-import com.hbm.blocks.bomb.BombMulti;
-import com.hbm.blocks.bomb.BombThermo;
-import com.hbm.blocks.bomb.CheaterVirus;
-import com.hbm.blocks.bomb.CheaterVirusSeed;
-import com.hbm.blocks.bomb.CompactLauncher;
-import com.hbm.blocks.bomb.CrystalPulsar;
-import com.hbm.blocks.bomb.CrystalVirus;
-import com.hbm.blocks.bomb.DetCord;
-import com.hbm.blocks.bomb.DetMiner;
-import com.hbm.blocks.bomb.DigammaFlame;
-import com.hbm.blocks.bomb.DigammaMatter;
-import com.hbm.blocks.bomb.Landmine;
-import com.hbm.blocks.bomb.LaunchPad;
-import com.hbm.blocks.bomb.LaunchTable;
-import com.hbm.blocks.bomb.NukeBalefire;
-import com.hbm.blocks.bomb.NukeBoy;
-import com.hbm.blocks.bomb.NukeCustom;
-import com.hbm.blocks.bomb.NukeFleija;
-import com.hbm.blocks.bomb.NukeGadget;
-import com.hbm.blocks.bomb.NukeMan;
-import com.hbm.blocks.bomb.NukeMike;
-import com.hbm.blocks.bomb.NukeN2;
-import com.hbm.blocks.bomb.NukeN45;
-import com.hbm.blocks.bomb.NukePrototype;
-import com.hbm.blocks.bomb.NukeSolinium;
-import com.hbm.blocks.bomb.NukeTsar;
-import com.hbm.blocks.bomb.RailgunPlasma;
+import com.hbm.blocks.bomb.*;
 import com.hbm.blocks.gas.BlockGasAsbestos;
 import com.hbm.blocks.gas.BlockGasCoal;
 import com.hbm.blocks.gas.BlockGasExplosive;
@@ -132,6 +97,10 @@ import com.hbm.blocks.network.BlockFluidDuct;
 import com.hbm.blocks.network.BlockFluidPipeMk2;
 import com.hbm.blocks.network.BlockFluidPipeSolid;
 import com.hbm.blocks.network.CableSwitch;
+import com.hbm.blocks.siege.SiegeCircuit;
+import com.hbm.blocks.siege.SiegeHole;
+import com.hbm.blocks.siege.SiegeInternal;
+import com.hbm.blocks.siege.SiegeShield;
 import com.hbm.blocks.test.KeypadTest;
 import com.hbm.blocks.test.TestObjTester;
 import com.hbm.blocks.test.TestRender;
@@ -591,7 +560,8 @@ public class ModBlocks {
 	public static final Block block_tritium = new BlockRotatablePillar(Material.GLASS, "block_tritium").setSoundType(SoundType.GLASS).setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(2.0F);
 	public static final Block block_semtex = new BlockSemtex(Material.TNT, "block_semtex").setSoundType(SoundType.METAL).setCreativeTab(MainRegistry.blockTab).setHardness(2.0F).setResistance(2.0F);
 	public static final Block block_smore = new BlockBase(Material.ROCK, "block_smore").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(900.0F);
-	
+
+
 	public static final Block sellafield_slaked = new BlockBase(Material.ROCK, "sellafield_slaked").setSoundType(SoundType.STONE).setHardness(5.0F).setResistance(6F).setCreativeTab(MainRegistry.resourceTab);
 	public static final Block sellafield_0 = new BlockOre(Material.ROCK, 1.0F, 5.0F, "sellafield_0").setSoundType(SoundType.STONE).setHardness(5.0F).setResistance(6F).setCreativeTab(MainRegistry.resourceTab);
 	public static final Block sellafield_1 = new BlockOre(Material.ROCK, 2.0F, 10.0F, "sellafield_1").setSoundType(SoundType.STONE).setHardness(5.0F).setResistance(6F).setCreativeTab(MainRegistry.resourceTab);
@@ -725,6 +695,10 @@ public class ModBlocks {
 	public static final Block vitrified_barrel = new YellowBarrel(Material.IRON, "vitrified_barrel").setCreativeTab(MainRegistry.nukeTab).setHardness(0.5F).setResistance(2.5F);
 	public static final Block lox_barrel = new RedBarrel(Material.IRON, "lox_barrel").setCreativeTab(MainRegistry.nukeTab).setHardness(0.5F).setResistance(2.5F);
 	public static final Block taint_barrel = new RedBarrel(Material.IRON, "taint_barrel").setCreativeTab(MainRegistry.nukeTab).setHardness(0.5F).setResistance(2.5F);
+
+	public static final Block c4 = new BlockC4(Material.TNT, "c4").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
+	public static final Block tnt = new BlockTNT(Material.TNT, "tnt").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
+	public static final Block dynamite = new BlockDynamite(Material.TNT, "dynamite").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
 	
 	public static final Block barrel_plastic = new BlockFluidBarrel(Material.IRON, 12000, "barrel_plastic").setSoundType(SoundType.STONE).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block barrel_corroded = new BlockFluidBarrel(Material.IRON, 6000, "barrel_corroded").setSoundType(SoundType.METAL).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
@@ -957,6 +931,7 @@ public class ModBlocks {
 	public static final int guiID_rbmk_console = 121;
 	public static final int guiID_rbmk_outgasser = 122;
 	public static final int guiID_rbmk_storage = 129;
+	public static final int guiID_rbmk_heater = 130;
 	public static final Block rbmk_blank = new RBMKBlank("rbmk_blank", "rbmk_blank").setHardness(15.0F).setResistance(100.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block rbmk_rod = new RBMKRod(false, "rbmk_rod", "rbmk_element").setHardness(15.0F).setResistance(100.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block rbmk_rod_mod = new RBMKRod(true, "rbmk_rod_mod", "rbmk_element_mod").setHardness(15.0F).setResistance(100.0F).setCreativeTab(MainRegistry.machineTab);
@@ -977,7 +952,6 @@ public class ModBlocks {
 	public static final Block rbmk_steam_inlet = new RBMKInlet(Material.IRON, "rbmk_steam_inlet").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
 	public static final Block rbmk_steam_outlet = new RBMKOutlet(Material.IRON, "rbmk_steam_outlet").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
 	public static final Block rbmk_cooler = new RBMKCooler("rbmk_cooler","rbmk_cooler").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
-
 	public static final Block rbmk_heater  = new RBMKHeater("rbmk_heater","rbmk_heater").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
 	public static final Block rbmk_heatex = new RBMKHeatex(Material.IRON,"rbmk_heatex").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(100.0F);
 	public static final Block pribris = new RBMKDebris("pribris").setCreativeTab(MainRegistry.machineTab).setHardness(50.0F).setResistance(600.0F);
@@ -1349,7 +1323,13 @@ public class ModBlocks {
 	public static final Block railing_end_flipped_self = new BlockRailing(Material.IRON, 0, "railing_end_flipped_self").setHardness(0.25F).setResistance(2.0F).setCreativeTab(MainRegistry.blockTab);
 	public static final Block railing_normal = new BlockRailing(Material.IRON, 1, "railing_normal").setHardness(0.25F).setResistance(2.0F).setCreativeTab(MainRegistry.blockTab);
 	public static final Block railing_bend = new BlockRailing(Material.IRON, 2, "railing_bend").setHardness(0.25F).setResistance(2.0F).setCreativeTab(MainRegistry.blockTab);
-	
+
+	public static  final Block siege_shield = new SiegeShield(Material.IRON,"siege_shield").setCreativeTab(MainRegistry.blockTab).setBlockUnbreakable().setResistance(900.0F);
+	public static final  Block siege_internal = new SiegeInternal(Material.IRON,"siege_internal").setCreativeTab(MainRegistry.blockTab).setBlockUnbreakable().setResistance(60.0F);
+	public static  final Block siege_circuit = new SiegeCircuit(Material.IRON,"siege_circuit").setCreativeTab(MainRegistry.blockTab).setBlockUnbreakable().setResistance(10.0F);
+	public static  final Block siege_emergency = new BlockBase(Material.IRON,"siege_emergency").setCreativeTab(MainRegistry.blockTab).setBlockUnbreakable().setResistance(20000.0F);
+	public static  final Block siege_hole = new SiegeHole(Material.IRON,"siege_hole").setCreativeTab(MainRegistry.blockTab).setBlockUnbreakable().setResistance(900.0F);
+
 	//Control panel
 	public static final int guiID_control_panel = 106;
 	public static final Block control0 = new BlockControlPanel(Material.IRON, "control_panel0").setHardness(0.25F).setResistance(2.0F).setCreativeTab(MainRegistry.blockTab);

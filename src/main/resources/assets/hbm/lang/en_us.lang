@@ -4138,3 +4138,7 @@ commands.hbmrad.player_success=Successfully cleared radiation for all online pla
 commands.hbmrad.not_rad=Please enter new rad value!
 
 commands.hbmrad.not_found_player=Cannot find player %1$s!
+bomb.tnt_enabled=[ Ignite On Break: Enabled ]
+
+
+bomb.tnt_disabled=[ Ignite On Break: Disaabled ]

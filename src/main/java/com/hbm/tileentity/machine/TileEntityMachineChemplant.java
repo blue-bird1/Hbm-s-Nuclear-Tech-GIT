@@ -7,6 +7,7 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.handler.MultiblockHandler;
 import com.hbm.interfaces.IConsumer;
 import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.inventory.RecipesCommon;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.MachineRecipes;
@@ -785,7 +786,7 @@ public class TileEntityMachineChemplant extends TileEntityMachineBase implements
 					ItemStack compareStack = stack.copy();
 					compareStack.setCount(1);
 
-					if(nextIngredient.isApplicable(compareStack)){ // bingo found something
+					if(isItemAcceptable(nextIngredient.getStack(), compareStack)){ // bingo found something
 
 						int foundCount = Math.min(stack.getCount(), possibleAmount);
 						if(te != null && !te.canExtractItem(slot, stack, foundCount))
@@ -866,7 +867,7 @@ public class TileEntityMachineChemplant extends TileEntityMachineBase implements
 			int[] ids1 = OreDictionary.getOreIDs(stack1);
 			int[] ids2 = OreDictionary.getOreIDs(stack2);
 			
-			if(ids1 != null && ids2 != null && ids1.length > 0 && ids2.length > 0) {
+			if(ids1 != null && ids1.length > 0 && ids2.length > 0) {
 				for(int i = 0; i < ids1.length; i++)
 					for(int j = 0; j < ids2.length; j++)
 						if(ids1[i] == ids2[j])

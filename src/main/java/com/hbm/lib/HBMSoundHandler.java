@@ -252,7 +252,10 @@ public final class HBMSoundHandler {
 	public static SoundEvent sectorSweep = registerBypass("music.recordsectorsweep");
 	public static SoundEvent vortalCombat = registerBypass("music.recordvortalcombat");
 	public static SoundEvent glass = registerBypass("music.transmission");
-	
+
+	public static SoundEvent siegeDeath = registerBypass("entity.siegeDeath");
+	public static SoundEvent siegeHurt = registerBypass("entity.siegeHurt");
+	public static SoundEvent siegeIdle = register("entity.siegeIdle");
 	public static SoundEvent metalBlock = registerBypass("step.metalBlock");
 	
 	public static SoundEvent[] geigerSounds;

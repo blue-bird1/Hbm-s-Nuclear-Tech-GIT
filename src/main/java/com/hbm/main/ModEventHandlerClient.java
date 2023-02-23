@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.hbm.items.machine.*;
+import com.hbm.util.EnumUtil;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -51,13 +53,8 @@ import com.hbm.items.armor.ItemArmorMod;
 import com.hbm.items.armor.JetpackBase;
 import com.hbm.items.gear.ArmorFSB;
 import com.hbm.items.gear.RedstoneSword;
-import com.hbm.items.machine.ItemAssemblyTemplate;
 import com.hbm.items.machine.ItemCassette.TrackType;
-import com.hbm.items.machine.ItemChemistryTemplate;
 import com.hbm.items.machine.ItemChemistryTemplate.EnumChemistryTemplate;
-import com.hbm.items.machine.ItemFluidTank;
-import com.hbm.items.machine.ItemForgeFluidIdentifier;
-import com.hbm.items.machine.ItemRBMKPellet;
 import com.hbm.items.special.ItemHot;
 import com.hbm.items.special.ItemWasteLong;
 import com.hbm.items.special.ItemWasteShort;
@@ -589,6 +586,14 @@ public class ModEventHandlerClient {
 			}
 			return 0xFFFFFF;
 		}, ModItems.siren_track);
+
+		evt.getItemColors().registerItemColorHandler((ItemStack stack, int tintIndex) -> {
+			if(tintIndex == 1) {
+				ItemChemicalDye.EnumChemDye dye = EnumUtil.grabEnumSafely(ItemChemicalDye.EnumChemDye.class, stack.getItemDamage());
+				return dye.color;
+			}
+			return 0xFFFFFF;
+		}, ModItems.crayon);
 	}
 
 	@SubscribeEvent

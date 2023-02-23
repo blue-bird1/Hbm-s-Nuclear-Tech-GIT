@@ -8,8 +8,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockBase extends Block {
@@ -70,5 +72,25 @@ public class BlockBase extends Block {
 
 	public Block setSoundType(SoundType sound){
 		return super.setSoundType(sound);
+	}
+
+	public void dismantle(World world, int x, int y, int z) {
+
+		world.setBlockToAir(new BlockPos(x, y,z));
+
+		ItemStack itemstack = new ItemStack(this, 1);
+		float f = world.rand.nextFloat() * 0.6F + 0.2F;
+		float f1 = world.rand.nextFloat() * 0.2F;
+		float f2 = world.rand.nextFloat() * 0.6F + 0.2F;
+
+		EntityItem entityitem = new EntityItem(world, x + f, y + f1 + 1, z + f2, itemstack);
+
+		float f3 = 0.05F;
+		entityitem.motionX = (float) world.rand.nextGaussian() * f3;
+		entityitem.motionY = (float) world.rand.nextGaussian() * f3 + 0.2F;
+		entityitem.motionZ = (float) world.rand.nextGaussian() * f3;
+
+		if(!world.isRemote)
+			world.spawnEntity(entityitem);
 	}
 }

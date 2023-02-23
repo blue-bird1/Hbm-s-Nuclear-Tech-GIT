@@ -309,8 +309,8 @@ public class GunEnergyFactory {
 
 				/*
 				 * java.lang.NullPointerException
-				 *	at cpw.mods.fml.common.network.FMLOutboundHandler$OutboundTarget$7.selectNetworks(FMLOutboundHandler.java:193)
-				 *	at cpw.mods.fml.common.network.FMLOutboundHandler.write(FMLOutboundHandler.java:273)
+				 *	at net.minecraftforge.fml.common.network.FMLOutboundHandler$OutboundTarget$7.selectNetworks(FMLOutboundHandler.java:193)
+				 *	at net.minecraftforge.fml.common.network.FMLOutboundHandler.write(FMLOutboundHandler.java:273)
 				 *	at io.netty.channel.DefaultChannelHandlerContext.invokeWrite(DefaultChannelHandlerContext.java:644)
 				 *	at io.netty.channel.DefaultChannelHandlerContext.write(DefaultChannelHandlerContext.java:698)
 				 *	at io.netty.channel.DefaultChannelHandlerContext.write(DefaultChannelHandlerContext.java:637)
@@ -322,7 +322,7 @@ public class GunEnergyFactory {
 				 *	at io.netty.channel.DefaultChannelHandlerContext.writeAndFlush(DefaultChannelHandlerContext.java:717)
 				 *	at io.netty.channel.DefaultChannelPipeline.writeAndFlush(DefaultChannelPipeline.java:893)
 				 *	at io.netty.channel.AbstractChannel.writeAndFlush(AbstractChannel.java:239)
-				 *	at cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper.sendToAllAround(SimpleNetworkWrapper.java:210)
+				 *	at net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper.sendToAllAround(SimpleNetworkWrapper.java:210)
 				 *	at com.hbm.handler.guncfg.GunEnergyFactory$1.behaveBlockHit(GunEnergyFactory.java:150)
 				 */
 				PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, bullet.posX, bullet.posY, bullet.posZ), new TargetPoint(bullet.dimension, bullet.posX, bullet.posY, bullet.posZ, 50));
