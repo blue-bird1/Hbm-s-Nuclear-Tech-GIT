@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
+  "parent": "hbm:blocks/charge_dynamite",
   "textures": {
-    "layer0": "hbm:items/charge_dynamite"
+    "layer0": "hbm:blocks/charge_dynamite"
   }
 }

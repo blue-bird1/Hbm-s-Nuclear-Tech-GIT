@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
+  "parent": "hbm:blocks/charge_semtex",
   "textures": {
-    "layer0": "hbm:items/charge_semtex"
+    "layer0": "hbm:blocks/charge_semtex"
   }
 }
