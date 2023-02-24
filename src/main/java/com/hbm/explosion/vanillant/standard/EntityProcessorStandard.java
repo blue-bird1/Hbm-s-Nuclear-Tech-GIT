@@ -8,12 +8,14 @@ import com.hbm.explosion.vanillant.interfaces.ICustomDamageHandler;
 import com.hbm.explosion.vanillant.interfaces.IEntityProcessor;
 import com.hbm.explosion.vanillant.interfaces.IEntityRangeMutator;
 
+import com.hbm.render.amlfrom1710.Vec3;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -23,9 +25,9 @@ public class EntityProcessorStandard implements IEntityProcessor {
 	protected ICustomDamageHandler damage;
 
 	@Override
-	public HashMap<EntityPlayer, Vec3> process(ExplosionVNT explosion, World world, double x, double y, double z, float size) {
+	public HashMap<EntityPlayer, Vec3d> process(ExplosionVNT explosion, World world, double x, double y, double z, float size) {
 
-		HashMap<EntityPlayer, Vec3> affectedPlayers = new HashMap();
+		HashMap<EntityPlayer, Vec3d> affectedPlayers = new HashMap();
 
 		size *= 2.0F;
 		
@@ -40,10 +42,10 @@ public class EntityProcessorStandard implements IEntityProcessor {
 		double minZ = z - (double) size - 1.0D;
 		double maxZ = z + (double) size + 1.0D;
 		
-		List list = world.getEntitiesWithinAABBExcludingEntity(explosion.exploder, AxisAlignedBB.getBoundingBox(minX, minY, minZ, maxX, maxY, maxZ));
+		List list = world.getEntitiesWithinAABBExcludingEntity(explosion.exploder, new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ));
 		
 		ForgeEventFactory.onExplosionDetonate(world, explosion.compat, list, size);
-		Vec3 vec3 = Vec3.createVectorHelper(x, y, z);
+		Vec3d vec3 = new Vec3d(x, y, z);
 
 		for(int index = 0; index < list.size(); ++index) {
 			
@@ -63,18 +65,18 @@ public class EntityProcessorStandard implements IEntityProcessor {
 					deltaY /= distance;
 					deltaZ /= distance;
 					
-					double density = world.getBlockDensity(vec3, entity.boundingBox);
+					double density = world.getBlockDensity(vec3, entity.getEntityBoundingBox());
 					double knockback = (1.0D - distanceScaled) * density;
 					
-					entity.attackEntityFrom(DamageSource.setExplosionSource(explosion.compat), (float) ((int) ((knockback * knockback + knockback) / 2.0D * 8.0D * size + 1.0D)));
-					double enchKnockback = EnchantmentProtection.func_92092_a(entity, knockback);
+					entity.attackEntityFrom(DamageSource.causeExplosionDamage(explosion.compat), (float) ((int) ((knockback * knockback + knockback) / 2.0D * 8.0D * size + 1.0D)));
+					double enchKnockback = EnchantmentProtection.getBlastDamageReduction((EntityLivingBase) entity, knockback);
 					
 					entity.motionX += deltaX * enchKnockback;
 					entity.motionY += deltaY * enchKnockback;
 					entity.motionZ += deltaZ * enchKnockback;
 
 					if(entity instanceof EntityPlayer) {
-						affectedPlayers.put((EntityPlayer) entity, Vec3.createVectorHelper(deltaX * knockback, deltaY * knockback, deltaZ * knockback));
+						affectedPlayers.put((EntityPlayer) entity, Vec3.createVectorHelper(deltaX * knockback, deltaY * knockback, deltaZ * knockback).toVec3d());
 					}
 					
 					if(damage != null) {

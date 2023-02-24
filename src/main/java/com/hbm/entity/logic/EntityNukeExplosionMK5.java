@@ -2,6 +2,14 @@ package com.hbm.entity.logic;
 
 import java.util.List;
 
+import com.hbm.lib.HBMSoundHandler;
+import com.hbm.main.AdvancementManager;
+import com.hbm.render.amlfrom1710.Vec3;
+import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import org.apache.logging.log4j.Level;
 
 import com.hbm.config.BombConfig;
@@ -18,8 +26,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class EntityNukeExplosionMK5 extends Entity {
@@ -56,24 +62,26 @@ public class EntityNukeExplosionMK5 extends Entity {
 			return;
 		}
 		
-		for(Object player : this.worldObj.playerEntities) {
-			((EntityPlayer)player).triggerAchievement(MainRegistry.achManhattan);
+		for(Object player : this.world.playerEntities) {
+			AdvancementManager.grantAchievement((EntityPlayer)player, AdvancementManager.achMan);
+
+			// ((EntityPlayer)player).triggerAchievement(MainRegistry.achManhattan);
 		}
 		
-		if(!worldObj.isRemote && fallout && explosion != null && this.ticksExisted < 10) {
+		if(!world.isRemote && fallout && explosion != null && this.ticksExisted < 10) {
 			radiate(500_000, this.length * 2);
 		}
 		
 		if(!mute) {
-			this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F);
+			this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_LIGHTNING_THUNDER,  SoundCategory.BLOCKS ,10000.0F, 0.8F + this.rand.nextFloat() * 0.2F, true);
 			if(rand.nextInt(5) == 0)
-				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F);
+				this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F, true);
 		}
 		
-		ExplosionNukeGeneric.dealDamage(this.worldObj, this.posX, this.posY, this.posZ, this.length * 2);
+		ExplosionNukeGeneric.dealDamage(this.world, this.posX, this.posY, this.posZ, this.length * 2);
 		
 		if(explosion == null) {
-			explosion = new ExplosionNukeRayBatched(worldObj, (int)this.posX, (int)this.posY, (int)this.posZ, this.strength, this.speed, this.length);
+			explosion = new ExplosionNukeRayBatched(world, (int)this.posX, (int)this.posY, (int)this.posZ, this.strength, this.speed, this.length);
 		}
 		
 		if(!explosion.isAusf3Complete) {
@@ -85,13 +93,13 @@ public class EntityNukeExplosionMK5 extends Entity {
 			
 		} else if(fallout) {
 
-			EntityFalloutRain fallout = new EntityFalloutRain(this.worldObj);
+			EntityFalloutRain fallout = new EntityFalloutRain(this.world);
 			fallout.posX = this.posX;
 			fallout.posY = this.posY;
 			fallout.posZ = this.posZ;
-			fallout.setScale((int)(this.length * 2.5 + falloutAdd) * BombConfig.falloutRange / 100);
+			fallout.setScale(16, (int)(this.length * 2.5 + falloutAdd) * BombConfig.falloutRange / 100);
 
-			this.worldObj.spawnEntityInWorld(fallout);
+			this.world.spawnEntity(fallout);
 			
 			this.setDead();
 		} else {
@@ -101,7 +109,7 @@ public class EntityNukeExplosionMK5 extends Entity {
 	
 	private void radiate(float rads, double range) {
 		
-		List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(range, range, range));
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(posX, posY, posZ, posX, posY, posZ).expand(range, range, range));
 		
 		for(EntityLivingBase e : entities) {
 			
@@ -117,7 +125,7 @@ public class EntityNukeExplosionMK5 extends Entity {
 				int iy = (int)Math.floor(posY + vec.yCoord * i);
 				int iz = (int)Math.floor(posZ + vec.zCoord * i);
 				
-				res += worldObj.getBlock(ix, iy, iz).getExplosionResistance(null);
+				res += world.getBlockState(new BlockPos(ix, iy, iz)).getBlock().getExplosionResistance(null);
 			}
 			
 			if(res < 1)

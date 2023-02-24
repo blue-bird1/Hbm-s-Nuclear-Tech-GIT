@@ -8,14 +8,16 @@ import com.hbm.explosion.vanillant.interfaces.ICustomDamageHandler;
 import com.hbm.explosion.vanillant.interfaces.IEntityProcessor;
 import com.hbm.explosion.vanillant.interfaces.IEntityRangeMutator;
 
+import com.hbm.lib.ForgeDirection;
+import com.hbm.render.amlfrom1710.Vec3;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.ForgeEventFactory;
 
 /** The amount of good decisions in NTM is few and far between, but the VNT explosion surely is one of them. */
@@ -30,9 +32,9 @@ public class EntityProcessorCross implements IEntityProcessor {
 	}
 
 	@Override
-	public HashMap<EntityPlayer, Vec3> process(ExplosionVNT explosion, World world, double x, double y, double z, float size) {
+	public HashMap<EntityPlayer, Vec3d> process(ExplosionVNT explosion, World world, double x, double y, double z, float size) {
 
-		HashMap<EntityPlayer, Vec3> affectedPlayers = new HashMap();
+		HashMap<EntityPlayer, Vec3d> affectedPlayers = new HashMap();
 
 		size *= 2.0F;
 		
@@ -47,7 +49,7 @@ public class EntityProcessorCross implements IEntityProcessor {
 		double minZ = z - (double) size - 1.0D;
 		double maxZ = z + (double) size + 1.0D;
 		
-		List list = world.getEntitiesWithinAABBExcludingEntity(explosion.exploder, AxisAlignedBB.getBoundingBox(minX, minY, minZ, maxX, maxY, maxZ));
+		List list = world.getEntitiesWithinAABBExcludingEntity(explosion.exploder, new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ));
 		
 		ForgeEventFactory.onExplosionDetonate(world, explosion.compat, list, size);
 		
@@ -79,7 +81,7 @@ public class EntityProcessorCross implements IEntityProcessor {
 					double density = 0;
 					
 					for(Vec3 vec : nodes) {
-						double d = world.getBlockDensity(vec, entity.boundingBox);
+						double d = world.getBlockDensity(vec.toVec3d(), entity.getEntityBoundingBox());
 						if(d > density) {
 							density = d;
 						}
@@ -87,15 +89,15 @@ public class EntityProcessorCross implements IEntityProcessor {
 					
 					double knockback = (1.0D - distanceScaled) * density;
 					
-					entity.attackEntityFrom(DamageSource.setExplosionSource(explosion.compat), (float) ((int) ((knockback * knockback + knockback) / 2.0D * 8.0D * size + 1.0D)));
-					double enchKnockback = EnchantmentProtection.func_92092_a(entity, knockback);
+					entity.attackEntityFrom(DamageSource.causeExplosionDamage(explosion.compat), (float) ((int) ((knockback * knockback + knockback) / 2.0D * 8.0D * size + 1.0D)));
+					double enchKnockback = EnchantmentProtection.getBlastDamageReduction((EntityLivingBase) entity, knockback);
 					
 					entity.motionX += deltaX * enchKnockback;
 					entity.motionY += deltaY * enchKnockback;
 					entity.motionZ += deltaZ * enchKnockback;
 
 					if(entity instanceof EntityPlayer) {
-						affectedPlayers.put((EntityPlayer) entity, Vec3.createVectorHelper(deltaX * knockback, deltaY * knockback, deltaZ * knockback));
+						affectedPlayers.put((EntityPlayer) entity, Vec3.createVectorHelper(deltaX * knockback, deltaY * knockback, deltaZ * knockback).toVec3d());
 					}
 					
 					if(damage != null) {

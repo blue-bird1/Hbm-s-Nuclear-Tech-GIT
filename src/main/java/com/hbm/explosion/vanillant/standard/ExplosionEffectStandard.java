@@ -4,13 +4,19 @@ import java.util.List;
 
 import com.hbm.explosion.vanillant.ExplosionVNT;
 import com.hbm.explosion.vanillant.interfaces.IExplosionSFX;
+import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataForClientEffectsAndParticleHandlingPacket;
 import com.hbm.packet.PacketDispatcher;
 
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.ChunkPosition;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.sound.SoundEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class ExplosionEffectStandard implements IExplosionSFX {
 
@@ -20,27 +26,27 @@ public class ExplosionEffectStandard implements IExplosionSFX {
 		if(world.isRemote)
 			return;
 		
-		world.playSoundEffect(x, y, z, "random.explode", 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
+		world.playSound(x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE,  SoundCategory.BLOCKS,4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F, true);
 		
-		PacketDispatcher.wrapper.sendToAllAround(new ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataForClientEffectsAndParticleHandlingPacket(x, y, z, explosion.size, explosion.compat.affectedBlockPositions),  new TargetPoint(world.provider.dimensionId, x, y, z, 250));
+		PacketDispatcher.wrapper.sendToAllAround((IMessage) new ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataForClientEffectsAndParticleHandlingPacket(x, y, z, explosion.size, explosion.compat.getAffectedBlockPositions()),  new NetworkRegistry.TargetPoint(world.provider.getDimension(), x, y, z, 250));
 	}
 	
 	public static void performClient(World world, double x, double y, double z, float size, List affectedBlocks) {
 		
 		if(size >= 2.0F) {
-			world.spawnParticle("hugeexplosion", x, y, z, 1.0D, 0.0D, 0.0D);
+			world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, x, y, z, 1.0D, 0.0D, 0.0D);
 		} else {
-			world.spawnParticle("largeexplode", x, z, z, 1.0D, 0.0D, 0.0D);
+			world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, x, z, z, 1.0D, 0.0D, 0.0D);
 		}
 
 		int count = affectedBlocks.size();
 
 		for(int i = 0; i < count; i++) {
 
-			ChunkPosition pos = (ChunkPosition) affectedBlocks.get(i);
-			int pX = pos.chunkPosX;
-			int pY = pos.chunkPosY;
-			int pZ = pos.chunkPosZ;
+			BlockPos pos = (BlockPos) affectedBlocks.get(i);
+			int pX = pos.getX();
+			int pY = pos.getY();
+			int pZ = pos.getZ();
 
 			double oX = (double) ((float) pX + world.rand.nextFloat());
 			double oY = (double) ((float) pY + world.rand.nextFloat());
@@ -48,7 +54,7 @@ public class ExplosionEffectStandard implements IExplosionSFX {
 			double dX = oX - x;
 			double dY = oY - y;
 			double dZ = oZ - z;
-			double delta = (double) MathHelper.sqrt_double(dX * dX + dY * dY + dZ * dZ) / 1D /* hehehe */;
+			double delta = (double) MathHelper.sqrt(dX * dX + dY * dY + dZ * dZ) / 1D /* hehehe */;
 			dX /= delta;
 			dY /= delta;
 			dZ /= delta;
@@ -57,8 +63,8 @@ public class ExplosionEffectStandard implements IExplosionSFX {
 			dX *= mod;
 			dY *= mod;
 			dZ *= mod;
-			world.spawnParticle("explode", (oX + x * 1.0D) / 2.0D, (oY + y * 1.0D) / 2.0D, (oZ + z * 1.0D) / 2.0D, dX, dY, dZ);
-			world.spawnParticle("smoke", oX, oY, oZ, dX, dY, dZ);
+			world.spawnParticle( EnumParticleTypes.EXPLOSION_NORMAL , (oX + x * 1.0D) / 2.0D, (oY + y * 1.0D) / 2.0D, (oZ + z * 1.0D) / 2.0D, dX, dY, dZ);
+			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, oX, oY, oZ, dX, dY, dZ);
 		}
 	}
 }

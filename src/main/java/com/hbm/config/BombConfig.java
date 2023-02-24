@@ -21,6 +21,7 @@ public class BombConfig {
 	public static int aSchrabRadius = 20;
 	
 	public static int mk4 = 1024;
+	public static int mk5 = 2048;
 	public static int blastSpeed = 1024;
 	public static int falloutRange = 100;
 	public static int fChunkSpeed = 6;

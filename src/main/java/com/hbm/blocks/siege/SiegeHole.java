@@ -43,7 +43,7 @@ public class SiegeHole extends BlockBase {
 		if(list.size() < 2) {
 			EntitySiegeZombie zomb = new EntitySiegeZombie(world);
 			zomb.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0.0F, 0.0F);
-			zomb.onSpawnWithEgg(null);
+			// zomb.onSpawnWithEgg(null);
 			world.spawnEntity(zomb);
 		}
 	}

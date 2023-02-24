@@ -6,14 +6,16 @@ import java.util.List;
 
 import com.hbm.explosion.vanillant.standard.ExplosionEffectStandard;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.ChunkPosition;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Can you tell I'm fucking done with packets? Well, can you?
@@ -54,7 +56,7 @@ public class ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataFor
 			int j1 = buf.readByte() + j;
 			int k1 = buf.readByte() + k;
 			int l1 = buf.readByte() + l;
-			this.affectedBlocks.add(new ChunkPosition(j1, k1, l1));
+			this.affectedBlocks.add(new BlockPos(j1, k1, l1));
 		}
 	}
 
@@ -71,10 +73,10 @@ public class ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataFor
 		Iterator iterator = this.affectedBlocks.iterator();
 
 		while(iterator.hasNext()) {
-			ChunkPosition chunkposition = (ChunkPosition) iterator.next();
-			int l = chunkposition.chunkPosX - i;
-			int i1 = chunkposition.chunkPosY - j;
-			int j1 = chunkposition.chunkPosZ - k;
+			BlockPos chunkposition = (BlockPos) iterator.next();
+			int l = chunkposition.getX() - i;
+			int i1 = chunkposition.getY() - j;
+			int j1 = chunkposition.getZ() - k;
 			buf.writeByte(l);
 			buf.writeByte(i1);
 			buf.writeByte(j1);
@@ -83,12 +85,12 @@ public class ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataFor
 
 	public static class Handler implements IMessageHandler<ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataForClientEffectsAndParticleHandlingPacket, IMessage> {
 
+
 		@Override
 		@SideOnly(Side.CLIENT)
 		public IMessage onMessage(ExplosionVanillaNewTechnologyCompressedAffectedBlockPositionDataForClientEffectsAndParticleHandlingPacket m, MessageContext ctx) {
-			
-			ExplosionEffectStandard.performClient(Minecraft.getMinecraft().theWorld, m.posX, m.posY, m.posZ, m.size, m.affectedBlocks);
-			return null;
+			ExplosionEffectStandard.performClient(Minecraft.getMinecraft().world, m.posX, m.posY, m.posZ, m.size, m.affectedBlocks);
+			return m;
 		}
 	}
 }

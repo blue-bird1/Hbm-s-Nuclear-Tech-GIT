@@ -14,7 +14,6 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.tileentity.bomb.TileEntityCharge;
 
 import api.hbm.block.IToolable;
-import javafx.geometry.Pos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockHorizontal;

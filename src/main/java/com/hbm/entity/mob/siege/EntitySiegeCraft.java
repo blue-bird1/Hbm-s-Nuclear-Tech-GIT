@@ -3,7 +3,6 @@ package com.hbm.entity.mob.siege;
 import java.util.List;
 
 import com.hbm.entity.mob.EntityUFO;
-import com.hbm.entity.mob.EntityUFOBase;
 import com.hbm.entity.projectile.EntitySiegeLaser;
 import com.hbm.handler.SiegeOrchestrator;
 import com.hbm.lib.HBMSoundHandler;
