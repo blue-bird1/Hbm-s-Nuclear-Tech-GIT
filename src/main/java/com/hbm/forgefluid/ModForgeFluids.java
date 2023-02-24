@@ -98,10 +98,9 @@ public class ModForgeFluids {
     public static Fluid gasoline = new Fluid("gasoline", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/gasoline_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/gasoline_flowing"), null, Color.WHITE);
 
     public static Fluid coolant_hot = new Fluid("coolant_hot", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/coolant_hot_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/coolant_hot_flowing"), null, Color.WHITE).setTemperature(600);
-    public static Fluid mug = new Fluid("MUG", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/coolant_hot_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/coolant_hot_flowing"), null, Color.WHITE);
+    public static Fluid mug = new Fluid("mug", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/mug_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/mug_flowing"), null, Color.WHITE);
     public static Fluid mug_hot = new Fluid("mug_hot", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/mug_hot_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/mug_hot_flowing"), null, Color.WHITE);
 
-    // public static Fluid MUG_HOT =			new Fluid(				"MUG_HOT",			0xd8fcff, 0, 0, 0, EnumSymbol.NONE).setHeatCap(MUG.heatCap).setTemp(500);
 
     //Block fluids
     public static Fluid toxic_fluid = new ToxicFluid("toxic_fluid").setDensity(2500).setViscosity(2000).setLuminosity(15).setTemperature(220 + 273);

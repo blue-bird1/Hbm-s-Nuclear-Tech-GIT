@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.blocks.bomb.BlockC4;
+import com.hbm.blocks.bomb.BlockDynamite;
+import com.hbm.blocks.bomb.BlockTNT;
 import com.hbm.entity.item.EntityTNTPrimedBase;
 import com.hbm.render.entity.*;
 import com.hbm.tileentity.machine.rbmk.*;
@@ -972,6 +975,9 @@ public class ClientProxy extends ServerProxy {
 		ModelLoader.setCustomStateMapper(ModBlocks.stone_porous, new StateMap.Builder().ignore(BlockStone.VARIANT).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.volcano_core, new StateMap.Builder().ignore(BlockDummyable.META).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.bm_power_box, new StateMap.Builder().ignore(BMPowerBox.FACING, BMPowerBox.IS_ON).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.tnt,  new StateMap.Builder().ignore(BlockTNT.IgniteOnBreak).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.c4,  new StateMap.Builder().ignore(BlockC4.IgniteOnBreak).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.dynamite,  new StateMap.Builder().ignore(BlockDynamite.IgniteOnBreak).build());
 		//Drillgon200: This can't be efficient, but eh.
 		for(Block b : ModBlocks.ALL_BLOCKS){
 			if(b instanceof BlockDummyable || b instanceof RBMKDebrisRadiating || b instanceof DigammaMatter || b instanceof BlockFallout)

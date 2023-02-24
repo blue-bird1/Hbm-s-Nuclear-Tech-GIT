@@ -14,6 +14,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -23,31 +24,8 @@ import net.minecraft.world.World;
 
 public abstract class SiegeBase extends BlockBase  {
 
-	public static final PropertyEnum<EnumColor> meta = PropertyEnum.create("meta", EnumColor.class);
-	public static enum EnumColor  implements IStringSerializable  {
-		BLACK,
-		RED,
-		GREEN,
-		BROWN,
-		BLUE,
-		PURPLE,
-		CYAN,
-		SILVER,
-		GRAY,
-		PINK,
-		LIME,
-		YELLOW,
-		LIGHTBLUE,
-		MAGENTA,
-		ORANGE,
-		WHITE;
+	public static final PropertyEnum<EnumDyeColor> meta = PropertyEnum.create("meta", EnumDyeColor.class);
 
-
-		@Override
-		public String getName() {
-			return "color";
-		}
-	}
 
 	public SiegeBase(Material m, String s) {
 		super(m, s);
@@ -56,6 +34,11 @@ public abstract class SiegeBase extends BlockBase  {
 	@Override
 	public BlockStateContainer createBlockState(){
 		return new BlockStateContainer(this, meta);
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state){
+		return  0;
 	}
 
 	protected boolean solidNeighbors(World world, BlockPos pos) {

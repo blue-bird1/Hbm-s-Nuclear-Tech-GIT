@@ -41,6 +41,7 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 	public long power;
 	public static final long maxPower = 2000000;
 	public int progress;
+	public boolean needsProcess = true;
 	public int maxProgress = 100;
 	public boolean isProgressing;
 	int age = 0;
@@ -55,9 +56,28 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 	Random rand = new Random();
 	
 	public TileEntityMachineAssembler() {
+
 		super(18);
+		inventory = new ItemStackHandler(18){
+			@Override
+			protected void onContentsChanged(int slot){
+				markDirty();
+				OnContentsChanged(slot);
+				super.onContentsChanged(slot);
+			}
+
+			@Override
+			public int getSlotLimit(int slot) {
+				return 18;
+			}
+		};
 	}
-	
+
+	public void OnContentsChanged(int slot){
+		this.needsProcess = true;
+	}
+
+
 	@Override
 	public String getName() {
 		return "container.assembler";
@@ -137,10 +157,10 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 			consumption = 2;
 			isProgressing = false;
 			power = Library.chargeTEFromItems(inventory, 0, power, maxPower);
-			if(AssemblerRecipes.getOutputFromTempate(inventory.getStackInSlot(4)) != ItemStack.EMPTY && AssemblerRecipes.getRecipeFromTempate(inventory.getStackInSlot(4)) != null) {
+			if(needsProcess && (AssemblerRecipes.getOutputFromTempate(inventory.getStackInSlot(4)) != ItemStack.EMPTY && AssemblerRecipes.getRecipeFromTempate(inventory.getStackInSlot(4)) != null)) {
 				this.maxProgress = (ItemAssemblyTemplate.getProcessTime(inventory.getStackInSlot(4)) * speed) / 100;
-				if(power >= consumption && removeItems(AssemblerRecipes.getRecipeFromTempate(inventory.getStackInSlot(4)), cloneItemStackProper(inventory))) {
-
+				if(removeItems(AssemblerRecipes.getRecipeFromTempate(inventory.getStackInSlot(4)), cloneItemStackProper(inventory))) {
+					if(power >= consumption ){
 					if(inventory.getStackInSlot(5).isEmpty() || (!inventory.getStackInSlot(5).isEmpty() && inventory.getStackInSlot(5).getItem() == AssemblerRecipes.getOutputFromTempate(inventory.getStackInSlot(4)).copy().getItem()) && inventory.getStackInSlot(5).getCount() + AssemblerRecipes.getOutputFromTempate(inventory.getStackInSlot(4)).copy().getCount() <= inventory.getStackInSlot(5).getMaxStackSize()) {
 						progress++;
 						isProgressing = true;
@@ -159,11 +179,15 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 						}
 
 						power -= consumption;
-					}
-				} else
+					}}
+				} else{
 					progress = 0;
-			} else
+					needsProcess = false;
+				}
+			} else{
 				progress = 0;
+			}
+
 
 			int meta = this.getBlockMetadata();
 			TileEntity te = null;
@@ -200,7 +224,7 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 			}
 
 			if(te2 != null) {
-				ICapabilityProvider capte = (ICapabilityProvider) te2;
+				ICapabilityProvider capte = te2;
 				if(capte.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY())) {
 					IItemHandler cap = capte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY());
 					int[] slots;
@@ -208,7 +232,7 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 						slots = ((TileEntityMachineBase)te2).getAccessibleSlotsFromSide(MultiblockHandler.intToEnumFacing(meta).rotateY());
 						tryFillAssemblerCap(cap, slots, (TileEntityMachineBase)te2);
 					}
-					else{
+					else if(cap != null){
 						slots = new int[cap.getSlots()];
 						for(int i = 0; i< slots.length; i++)
 							slots[i] = i;
@@ -542,6 +566,7 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 								}else{
 									inventory.getStackInSlot(ingredientSlot).grow(foundCount); // transfer complete
 								}
+								needsProcess = true;
 							}else{
 								break; // ingredientSlot filled
 							}

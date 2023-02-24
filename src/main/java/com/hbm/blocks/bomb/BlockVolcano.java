@@ -199,7 +199,6 @@ public class BlockVolcano extends Block {
 			if(meta != META_GROWING_ACTIVE || y < 199)
 				return 0.007D; //about 250x an hour
 		}
-		
 		return 0;
 	}
 	

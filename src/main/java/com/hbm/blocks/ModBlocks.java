@@ -699,7 +699,14 @@ public class ModBlocks {
 	public static final Block c4 = new BlockC4(Material.TNT, "c4").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
 	public static final Block tnt = new BlockTNT(Material.TNT, "tnt").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
 	public static final Block dynamite = new BlockDynamite(Material.TNT, "dynamite").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
-	
+
+
+	public  static  final  Block charge_dynamite = new BlockChargeDynamite(Material.TNT, "dynamite").setCreativeTab(MainRegistry.nukeTab).setResistance(1.0F);
+	public static final Block charge_miner = new BlockChargeMiner(Material.TNT, "charge_miner").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
+	public static final Block charge_c4 = new BlockChargeC4(Material.TNT, "charge_c4").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
+	public static final Block charge_semtex = new BlockChargeSemtex(Material.TNT, "charge_semtex").setCreativeTab(MainRegistry.nukeTab).setHardness(1.0F);
+
+
 	public static final Block barrel_plastic = new BlockFluidBarrel(Material.IRON, 12000, "barrel_plastic").setSoundType(SoundType.STONE).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block barrel_corroded = new BlockFluidBarrel(Material.IRON, 6000, "barrel_corroded").setSoundType(SoundType.METAL).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block barrel_iron = new BlockFluidBarrel(Material.IRON, 8000, "barrel_iron").setSoundType(SoundType.METAL).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);

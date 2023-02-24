@@ -21,6 +21,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -87,15 +88,6 @@ public abstract class BlockTNTBase extends BlockFlammable implements IToolable, 
 	}
 
 
-	/**
-	 * @param state 
-	 * @return
-	 */
-	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
-	}
-
 	@Override
 	public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state) {
 
@@ -158,6 +150,10 @@ public abstract class BlockTNTBase extends BlockFlammable implements IToolable, 
 		return this.getDefaultState().withProperty(IgniteOnBreak, on);
 	}
 
+	@Override
+	public int getMetaFromState(IBlockState state){
+		return state.getValue(IgniteOnBreak)? 1 : 0;
+	}
 	@Override
 	public boolean onScrew(World world, EntityPlayer player, int x, int y, int z, EnumFacing side, float fX, float fY, float fZ, EnumHand hand, ToolType tool){
 		if(tool == ToolType.DEFUSER) {

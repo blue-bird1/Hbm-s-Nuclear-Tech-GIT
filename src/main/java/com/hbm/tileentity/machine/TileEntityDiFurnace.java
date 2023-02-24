@@ -26,6 +26,8 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 	private static final int[] slots_top = new int[] {0};
 	private static final int[] slots_bottom = new int[] {3};
 	private static final int[] slots_side = new int[] {1};
+
+	private static final int[] slots_left = new int[] {2};
 	
 	public TileEntityDiFurnace() {
 		super(4);
@@ -142,7 +144,7 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 	@Override
 	public int[] getAccessibleSlotsFromSide(EnumFacing e) {
 		int i = e.ordinal();
-		return i == 0 ? slots_bottom : (i == 1 ? slots_top : slots_side);
+		return i == 0 ? slots_bottom : (i == 1 ? slots_top: (i == 4? slots_left: slots_side));
 	}
 	
 	@Override
@@ -181,10 +183,8 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 	}
 	
 	public boolean canProcess() {
-		if(inventory.getStackInSlot(0) == null || inventory.getStackInSlot(1) == null)
-		{
-			return false;
-		}
+		inventory.getStackInSlot(0);
+		inventory.getStackInSlot(1);
 		ItemStack itemStack = MachineRecipes.getFurnaceProcessingResult(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
 		if(itemStack == null)
 		{	
