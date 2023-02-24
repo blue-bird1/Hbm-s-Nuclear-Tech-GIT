@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.hbm.tileentity.bomb.*;
 import com.hbm.tileentity.machine.rbmk.*;
 import org.apache.logging.log4j.Logger;
 
@@ -248,26 +249,6 @@ import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.TileEntityProxyEnergy;
 import com.hbm.tileentity.TileEntityProxyInventory;
 import com.hbm.tileentity.TileEntitySlidingBlastDoorKeypad;
-import com.hbm.tileentity.bomb.TileEntityBombMulti;
-import com.hbm.tileentity.bomb.TileEntityCompactLauncher;
-import com.hbm.tileentity.bomb.TileEntityCrashedBomb;
-import com.hbm.tileentity.bomb.TileEntityFireworks;
-import com.hbm.tileentity.bomb.TileEntityLandmine;
-import com.hbm.tileentity.bomb.TileEntityLaunchPad;
-import com.hbm.tileentity.bomb.TileEntityLaunchTable;
-import com.hbm.tileentity.bomb.TileEntityNukeBalefire;
-import com.hbm.tileentity.bomb.TileEntityNukeBoy;
-import com.hbm.tileentity.bomb.TileEntityNukeCustom;
-import com.hbm.tileentity.bomb.TileEntityNukeFleija;
-import com.hbm.tileentity.bomb.TileEntityNukeGadget;
-import com.hbm.tileentity.bomb.TileEntityNukeMan;
-import com.hbm.tileentity.bomb.TileEntityNukeMike;
-import com.hbm.tileentity.bomb.TileEntityNukeN2;
-import com.hbm.tileentity.bomb.TileEntityNukeN45;
-import com.hbm.tileentity.bomb.TileEntityNukePrototype;
-import com.hbm.tileentity.bomb.TileEntityNukeSolinium;
-import com.hbm.tileentity.bomb.TileEntityNukeTsar;
-import com.hbm.tileentity.bomb.TileEntityRailgun;
 import com.hbm.tileentity.conductor.TileEntityCable;
 import com.hbm.tileentity.conductor.TileEntityCableSwitch;
 import com.hbm.tileentity.conductor.TileEntityFFFluidDuct;
@@ -778,7 +759,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityFurnaceSteel.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_steel"));
 		GameRegistry.registerTileEntity(TileEntityDoorGeneric.class, new ResourceLocation(RefStrings.MODID, "tileentity_door_generic"));
 		GameRegistry.registerTileEntity(TileEntityBMPowerBox.class, new ResourceLocation(RefStrings.MODID, "tileentity_bm_power_box"));
-		
+		GameRegistry.registerTileEntity(TileEntityCharge.class, new ResourceLocation(RefStrings.MODID, "tileentity_charge"));
+
 		int i = 0;
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_nuke_mk4"), EntityNukeExplosionMK4.class, "entity_nuke_mk4", i++, MainRegistry.instance, 1000, 1, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_nuclear_fog"), EntityFogFX.class, "entity_nuclear_fog", i++, MainRegistry.instance, 1000, 1, true);

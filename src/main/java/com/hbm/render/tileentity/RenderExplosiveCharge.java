@@ -28,7 +28,7 @@ public class RenderExplosiveCharge extends TileEntitySpecialRenderer<TileEntityC
 			case 5: GL11.glRotated(-90, 0, 0, 1); break;
 		}
 
-		TileEntityCharge charge = (TileEntityCharge) tile;
+		TileEntityCharge charge = tile;
 		String text = charge.getMinutes() + ":" + charge.getSeconds();
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
 
