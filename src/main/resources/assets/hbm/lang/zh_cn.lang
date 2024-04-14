@@ -372,7 +372,7 @@ chat.glitch.1=普罗米修斯因为将知识赐予人类而受到众神的惩罚
 chat.glitch.13a=准备一些免费的东西.你需要它来完成那个神秘的成就.
 chat.glitch.13b=§4Sororicide
 chat.glitch.16=v yvxr lbhe nggvghqr!
-chat.glitch.17=89% 的魔术都不是魔术.严格来说,它们是巫术.
+chat.glitch.17=89%% 的魔术都不是魔术.严格来说,它们是巫术.
 chat.glitch.18=Here ya go.
 chat.glitch.19=Ë
 chat.glitch.20=Good day, I am text
@@ -5215,4 +5215,6 @@ weapon.ability.fire=燃烧
 weapon.ability.phosphorus=白磷刀刃
 weapon.ability.radiation=辐射
 weapon.ability.stun=震撼
-weapon.ability.vampire=吸血
+
+
+weapon.ability.vampire=Vampireitem.balefire_kit.name=Balefire Bomb Kitweapon.ability.vampire=吸血
