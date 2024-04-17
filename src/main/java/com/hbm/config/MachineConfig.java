@@ -49,8 +49,6 @@ public class MachineConfig {
 
 	public static boolean chemplantKeepOilProcessing = false;
 
-	public static boolean allowAnvilRecycling = true;
-	
 	public static boolean isFluidAllowed(Fluid f){
 		boolean isInList = blacklistedMixerFluids.contains(f.getName());
 		if(uuMixerFluidListIsWhitelist) return isInList;
@@ -107,6 +105,5 @@ public class MachineConfig {
 		rbmkJumpTemp = CommonConfig.createConfigInt(config, CATEGORY_MACHINE, generateConfigName(28, "rbmkJumpTemp"), "Controls at which rbmk column temperature the lid jumping begins. Can not be < 20°C. Set to > 1500°C to turn off. Default is 1250°C - <temp> (int)", 1250);
 		
 		chemplantKeepOilProcessing = CommonConfig.createConfigBool(config, CATEGORY_MACHINE, generateConfigName(29, "chemplantKeepOilProcessing"), "If false then the chemplant recipes processing Heavyoil, Industrial Oil, Naphtha, Light Oil will be removed. Otherwise not", false);
-		allowAnvilRecycling =  CommonConfig.createConfigBool(config, CATEGORY_MACHINE, generateConfigName(30, "allowAnvilRecycling"), "If true then anvil recipes can be exec Recycling recipes. Otherwise not", false);
 	}
 }
