@@ -1106,6 +1106,9 @@ public class MainRegistry {
 		FluidCombustionRecipes.registerFluidCombustionRecipes();
 		HbmDetox.init();
 
+		BobmazonOfferFactory.reset();
+		BobmazonOfferFactory.init();
+
 		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.lox_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.oxygen, 10000));
 		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.pink_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.kerosene, 10000));
 		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.red_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.diesel, 10000));
@@ -1138,9 +1141,6 @@ public class MainRegistry {
 		evt.registerServerCommand(new CommandRadiation());
 		evt.registerServerCommand(new CommandHbm());
 		AdvancementManager.init(evt.getServer());
-		//MUST be initialized AFTER achievements!!
-		BobmazonOfferFactory.reset();
-		BobmazonOfferFactory.init();
 	}
 
 	private void registerReactorFuels(){

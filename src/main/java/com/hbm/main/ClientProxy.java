@@ -2425,8 +2425,6 @@ public class ClientProxy extends ServerProxy {
 		});
 		
 		ParticleRenderLayer.register();
-		BobmazonOfferFactory.reset();
-		BobmazonOfferFactory.init();
 	}
 	
 	@Override
