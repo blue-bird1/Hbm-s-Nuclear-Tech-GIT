@@ -40,6 +40,16 @@ public class Fusion {
 
 		@Override
 		public void apply() {
+			// check not int >= 0
+			if (this.byproductChance < 0 || this.breedingLevel < 0 || this.steamProduction < 0){
+				CraftTweakerAPI.logError("byproductChance, breedingLevel and steamProduction must be >= 0");
+				return;
+			}
+			// check input not null
+			if (this.input == null){
+				CraftTweakerAPI.logError("fusion input must not be null");
+				return;
+			}
 			RECIPE_DATA_MAP.put(this.input, new FusionRecipeData(this.byproductChance, this.byproduct, this.breedingLevel, this.steamProduction));
 		}
 
@@ -52,13 +62,13 @@ public class Fusion {
 	}
 	@ZenMethod
 	public static void addFusionRecipe(ILiquidDefinition input, IItemStack output, int chance, int breedingLevel, int steamProduction) {
-		CraftTweakerAPI.apply(new ActionAddRecipe(CraftTweakerMC.getFluid(input), output, chance, breedingLevel, steamProduction));
+		NTMCraftTweaker.postInitActions.add((new ActionAddRecipe(CraftTweakerMC.getFluid(input), output, chance, breedingLevel, steamProduction));
 	}
 
 
 	@ZenMethod
 	public static void removeFusionRecipe(ILiquidDefinition input) {
-		CraftTweakerAPI.apply(new ActionRemoveRecipe(CraftTweakerMC.getFluid(input)));
+		NTMCraftTweaker.postInitActions.add(new ActionRemoveRecipe(CraftTweakerMC.getFluid(input)));
 	}
 
 	private static class ActionRemoveRecipe implements IAction{
