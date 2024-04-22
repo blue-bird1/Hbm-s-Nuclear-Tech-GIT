@@ -62,7 +62,7 @@ public class Fusion {
 	}
 	@ZenMethod
 	public static void addFusionRecipe(ILiquidDefinition input, IItemStack output, int chance, int breedingLevel, int steamProduction) {
-		NTMCraftTweaker.postInitActions.add((new ActionAddRecipe(CraftTweakerMC.getFluid(input), output, chance, breedingLevel, steamProduction));
+		NTMCraftTweaker.postInitActions.add(new ActionAddRecipe(CraftTweakerMC.getFluid(input), output, chance, breedingLevel, steamProduction));
 	}
 
 
